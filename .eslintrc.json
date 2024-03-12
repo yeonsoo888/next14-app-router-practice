@@ -1,3 +1,30 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next",
+  "plugins": [
+    "eslint-plugin-simple-import-sort",
+    "unused-imports"
+  ],
+  "env": {
+    "jest": true
+  },
+  "rules": {
+    "react/no-unescaped-entities": "off",
+    "@next/next/no-page-custom-font": "off",
+    "react/self-closing-comp": ["error", {
+      "component": true,
+      "html": true
+    }],
+    "react/jsx-first-prop-new-line": "error",
+    "comma-dangle": "off",
+    "@typescript-eslint/comma-dangle": "off",
+    "indent": ["off"],
+    "quotes": ["error", "single"],
+    "eol-last": "error",
+    "semi": ["error", "always"],
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "no-unused-vars": "off",
+    "unused-imports/no-unused-imports-ts": ["error"],
+    "comma-spacing": ["error", { "before": false, "after": true }]
+  }
 }
