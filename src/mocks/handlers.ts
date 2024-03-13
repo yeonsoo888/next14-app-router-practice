@@ -11,21 +11,24 @@ function generateDate() {
 }
 const User = [
   { id: 'elonmusk', nickname: 'Elon Musk', image: '/yRsRRjGO.jpg', address: '구로구 온수동 157' },
-  { id: 'zerohch0', nickname: '제로초', image: '/5Udwvqim.jpg' },
-  { id: 'leoturtle', nickname: '레오', image: faker.image.avatar() }
+  { id: 'zerohch0', nickname: '제로초', image: '/5Udwvqim.jpg', address: '구로구 온수동 157' },
+  { id: 'leoturtle', nickname: '레오', image: faker.image.avatar(), address: '구로구 온수동 157' },
+  { id: 'yeonsoo888', nickname: '포든의 왼발', image: '', address: '구로구 온수동 157' }
 ];
 
 const Posts = [];
 
 export const handlers = [
   http.post('/api/login', async ({ request }) => {
-    const data = await request.json();
-
-    return HttpResponse.json(User[1], {
-      headers: {
-        'Set-Cookie': 'connect.sid=msw-cookie;HttpOnly;Path=/'
-      }
-    });
+    const data = (await request.json()) as { id: string };
+    console.log(data);
+    if (data?.id === 'yeonsoo888') {
+      return HttpResponse.json(User[3], {
+        headers: {
+          'Set-Cookie': 'connect.sid=msw-cookie;HttpOnly;Path=/'
+        }
+      });
+    }
   }),
   http.post('/api/logout', () => {
     console.log('로그아웃');

@@ -6,10 +6,7 @@ export const {
   auth,
   signIn
 } = NextAuth({
-  pages: {
-    signIn: '/i/flow/login',
-    newUser: '/i/flow/signup'
-  },
+  pages: {},
   providers: [
     CredentialsProvider({
       async authorize(credentials) {
@@ -25,20 +22,30 @@ export const {
         });
 
         const user = await authResponse.json();
-
         console.log(user);
 
         return {
           id: user.id,
           nickname: user.nickname,
           image: user.image,
-          ...user
+          address: user.address
         };
       }
     })
   ],
   session: {
     strategy: 'jwt',
-    maxAge: 60 * 60 * 1 // 1시간
+    maxAge: 60 * 60 * 12
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      return { ...token, ...user };
+    },
+    async session({ session, token }: { session: any; token: any }) {
+      session.nickname = token.nickname;
+      session.id = token.id;
+      session.address = token.address;
+      return session;
+    }
   }
 });

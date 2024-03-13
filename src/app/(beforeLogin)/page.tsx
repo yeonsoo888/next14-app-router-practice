@@ -1,12 +1,13 @@
 'use client';
 
 import { signIn, useSession } from 'next-auth/react';
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useCallback } from 'react';
 
 import { css } from '@/styled-system/css';
 
 export default function Page() {
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
+    console.log('1');
     e.preventDefault();
     const { username, password } = e.currentTarget;
     const data = {
@@ -14,11 +15,12 @@ export default function Page() {
       password: password.value,
       redirect: false
     };
-    const res = await signIn('credentials', data);
-    console.log(res);
-  };
+
+    await signIn('credentials', data);
+  }, []);
 
   const session = useSession();
+  console.log(session);
 
   return (
     <div className={css({ background: '#ff9999', display: 'flex', justifyContent: 'center' })}>
